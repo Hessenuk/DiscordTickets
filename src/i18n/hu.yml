@@ -283,6 +283,7 @@ commands:
       name: hibajegy
       not_staff:
         title: ❌ Hiba
+        description: Only staff members can read the transcripts of others' tickets.
   user:
     create:
       name: Jegy létrehozása
@@ -291,6 +292,10 @@ commands:
         description: Kattints a lent található gombra a hibajegy létrehozásához.
       not_staff:
         title: ❌ Hiba
+        description: Only staff members can open tickets for other members.
+      sent:
+        description: '{user} has been invited to create a ticket in **{category}**.'
+        title: ✅ Prompt sent
 dm:
   closed:
     title: A hibajegyed bezárásra került
@@ -360,6 +365,14 @@ misc:
     description: "> [`{version}` megtekintése a GitHubon]({github})\n> [Változásnapló]({changelog})\n
       > [Frissítési útmutató]({guide})\n"
     title: Frissítés elérhető
+  role_error:
+    description: Sorry, the operation failed because of an invalid configuration.
+    fields:
+      for_admins:
+        value: "An invalid user or role was supplied, which usually means a staff
+          role has been deleted. [Click here]({url}) for resolution instructions.\n"
+        name: For server administrators
+    title: ⚠️ Something went wrong
 menus:
   category:
     placeholder: Kategória választása
@@ -424,6 +437,11 @@ ticket:
   inactive:
     description: "A <t:{timestamp}:R> óta nem volt tevékenység ezen a csatornán.\n
       Kérjük, folytassa a beszélgetést vagy {close} a jegyet.\n"
+    title: ⏰ This ticket is inactive
+  offline:
+    description: There aren't any staff members available at the moment, so it may
+      take longer than usual to get a response.
+    title: 😴 We're not online
 modals:
   feedback:
     rating:
