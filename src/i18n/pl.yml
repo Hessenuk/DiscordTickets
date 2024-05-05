@@ -212,6 +212,9 @@ commands:
           name: zgłoszenie
       description: Pobierz transkrypcję zgłoszenia
       name: transkrypcja
+      not_staff:
+        description: Only staff members can read the transcripts of others' tickets.
+        title: ❌ Error
     transfer:
       name: transferuj
       options:
@@ -362,6 +365,14 @@ misc:
   ratelimited:
     title: 🐢 Proszę, zwolnij
     description: Spróbuj ponownie za kilka sekund.
+  role_error:
+    description: Sorry, the operation failed because of an invalid configuration.
+    fields:
+      for_admins:
+        value: "An invalid user or role was supplied, which usually means a staff
+          role has been deleted. [Click here]({url}) for resolution instructions.\n"
+        name: For server administrators
+    title: ⚠️ Something went wrong
 modals:
   feedback:
     rating:
