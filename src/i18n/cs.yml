@@ -380,6 +380,14 @@ misc:
       > [Changelog]({changelog})
       > [Aktualizačná príručka]({guide})
     title: Aktualizácia je dostupná
+  role_error:
+    description: Sorry, the operation failed because of an invalid configuration.
+    fields:
+      for_admins:
+        value: "An invalid user or role was supplied, which usually means a staff
+          role has been deleted. [Click here]({url}) for resolution instructions.\n"
+        name: For server administrators
+    title: ⚠️ Something went wrong
 modals:
   feedback:
     comment:
