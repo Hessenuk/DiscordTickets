@@ -359,6 +359,14 @@ misc:
     description: "> [`{version}` auf GitHub anzeigen]({github})\n> [Änderungsprotokoll]({changelog})\n
       > [Anleitung aktualisieren]({guide})\n"
     title: Eine Aktualisierung ist verfügbar
+  role_error:
+    description: Sorry, the operation failed because of an invalid configuration.
+    fields:
+      for_admins:
+        value: "An invalid user or role was supplied, which usually means a staff
+          role has been deleted. [Click here]({url}) for resolution instructions.\n"
+        name: For server administrators
+    title: ⚠️ Something went wrong
 modals:
   feedback:
     comment:

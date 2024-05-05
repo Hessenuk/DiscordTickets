@@ -217,6 +217,7 @@ commands:
       name: транскрипт
       not_staff:
         title: ❌ Ошибка
+        description: Only staff members can read the transcripts of others' tickets.
     transfer:
       description: Передать права на тикет другому участнику
       name: передать
@@ -364,6 +365,14 @@ misc:
     description: "> [Просмотреть `{version}` на GitHub]({github})\n> [Журнал изменений]({changelog})\n
       > [Руководство по обновлению]({guide})\n"
     title: Доступно обновление
+  role_error:
+    description: Sorry, the operation failed because of an invalid configuration.
+    fields:
+      for_admins:
+        value: "An invalid user or role was supplied, which usually means a staff
+          role has been deleted. [Click here]({url}) for resolution instructions.\n"
+        name: For server administrators
+    title: ⚠️ Something went wrong
 ticket:
   closing_soon:
     title: ⌛ Этот тикет скоро будет закрыт

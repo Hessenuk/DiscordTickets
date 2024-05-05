@@ -378,6 +378,14 @@ misc:
       > [更新日誌]({changelog})
       > [更新指南]({guide})
     title: 有可用更新
+  role_error:
+    description: Sorry, the operation failed because of an invalid configuration.
+    fields:
+      for_admins:
+        name: For server administrators
+        value: "An invalid user or role was supplied, which usually means a staff
+          role has been deleted. [Click here]({url}) for resolution instructions.\n"
+    title: ⚠️ Something went wrong
 modals:
   feedback:
     comment:

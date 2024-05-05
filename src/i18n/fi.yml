@@ -7,6 +7,8 @@ commands:
       name: Kiinnitä viesti
       not_pinnable:
         title: ❌ Virhe
+        description: "This message can't be pinned.\nPlease ask an administrator to
+          check the bot's permissions.\n"
       pinned:
         description: Viesti on kiinnitetty.
         title: ✅ Kiinnitetty viesti
@@ -33,19 +35,40 @@ commands:
     force-close:
       not_staff:
         title: ❌ Virhe
+        description: Only staff members can force-close tickets.
       no_tickets:
         title: ❌ Ei tikettejä
+        description: There are no open tickets that have been inactive for more than
+          `{time}`.
       options:
         category:
           name: kategoria
+          description: Close all tickets in the specified category (must be used with
+            `time`)
         reason:
           name: syy
+          description: The reason for closing the ticket(s)
         ticket:
           name: tiketti
+          description: The ticket to close
         time:
           name: aika
+          description: Close all tickets that have been inactive for the specified
+            time
       confirm_multiple:
         title: ❓ Oletko varma?
+        description: "You are about to close **{count}** tickets that have been inactive
+          for more than `{time}`:\n{tickets}\n"
+      closed_one:
+        description: The channel will be deleted in a few seconds.
+        title: ✅ Ticket closed
+      confirmed_multiple:
+        description: The channels will be deleted in a few seconds.
+        title:
+        - ✅ Closing %d ticket
+        - ✅ Closing %d tickets
+      description: Forcibly close a ticket
+      name: force-close
     help:
       description: Näyttää apua valikon
       response:
@@ -54,8 +77,10 @@ commands:
           links: Hyödyllisiä linkkejä
           support: Tuki
           commands: Koko komento lista
+          docs: Documentation
         settings: Botin asetukset
         commands: Komennot
+        description: '**Use {command} to create a ticket and get support.**'
       title: Apua
       name: apua
     move:
@@ -63,7 +88,12 @@ commands:
       options:
         category:
           name: kategoria
+          description: The category to move the ticket to
       description: Siirrä tiketti toiseen kategoriaan
+      moved: 🗃️ {by} has moved this ticket from **{from}** to **{to}**.
+      not_staff:
+        description: Only staff members can move tickets.
+        title: ❌ Error
     remove:
       options:
         member:
@@ -71,15 +101,20 @@ commands:
           name: jäsen
         ticket:
           name: tiketti
+          description: The ticket to remove the member from
       name: poista
       not_staff:
         title: ❌ Virhe
+        description: Only staff members can remove members from others' tickets.
       success:
         title: ✅ Poistettu
+        description: '{member} has been removed from {ticket}.'
       description: Poista jäsen tiketistä
+      removed: ⬅️ {removed} has been removed by {by}.
     close:
       invalid_time:
         title: ❌ Virheellinen
+        description: '`{input}` is not a valid time format.'
       name: sulje
       options:
         reason:
@@ -91,9 +126,14 @@ commands:
       name: varaa
       not_staff:
         title: ❌ Virhe
+        description: Only staff members can claim tickets.
     new:
       description: Luo uusi tiketti
       name: uusi
+      options:
+        references:
+          description: The number of a related ticket
+          name: references
     priority:
       options:
         priority:
@@ -101,11 +141,23 @@ commands:
             LOW: 🟢 Hidas
             HIGH: 🔴 Kiireellinen
             MEDIUM: 🟠 Normaali
+          description: The priority of the ticket
+          name: priority
+      not_staff:
+        description: Only staff members can change the priority of tickets.
+        title: ❌ Error
+      description: Set the priority of a ticket
+      name: priority
+      success:
+        description: This ticket's priority has been set to `{priority}`.
+        title: ✅ Priority set
     topic:
       name: aihe
+      description: Change the topic of a ticket
     tickets:
       not_staff:
         title: ❌ Virhe
+        description: Only staff members can view others' tickets.
       response:
         title:
           other: '{displayName} tiketit'
@@ -113,21 +165,65 @@ commands:
         fields:
           closed:
             name: Suljetut tiketit
+            none:
+              other: "{user} hasn't made any tickets."
+              own: "You haven't made any tickets.\nUse {new} to open a ticket.\n"
+          open:
+            name: Open tickets
+        description: Use {transcript} to download the transcript of a ticket.
       name: tiketit
       options:
         member:
           name: jäsen
+          description: The member to list the tickets of
+      description: List your own or someone else's tickets
     transfer:
       options:
         member:
           name: jäsen
+          description: The member to transfer ownership to
       name: siirrä
+      transferred_from: 📨 {user} has transferred this ticket from {from} to {to}.
+      description: Transfer ownership of a ticket to another member
+      transferred: 📨 {user} has transferred this ticket to {to}.
     transcript:
       options:
         ticket:
           name: tiketti
+          description: The ticket to get the transcript of
+        member:
+          description: The member to search for tickets of
+          name: member
+      description: Get the transcript of a ticket
+      name: transcript
+      not_staff:
+        description: Only staff members can read the transcripts of others' tickets.
+        title: ❌ Error
     release:
       name: julkaise
+      description: Release (unclaim) a ticket
+    tag:
+      description: Use a tag
+      name: tag
+      options:
+        for:
+          description: The user to target the tag to
+          name: for
+        tag:
+          description: The name of the tag to use
+          name: tag
+  user:
+    create:
+      name: Create ticket for user
+      not_staff:
+        description: Only staff members can open tickets for other members.
+        title: ❌ Error
+      prompt:
+        description: Click the button below to create a ticket.
+        title: Please create a ticket
+      sent:
+        description: '{user} has been invited to create a ticket in **{category}**.'
+        title: ✅ Prompt sent
 buttons:
   close:
     text: Sulje
@@ -160,8 +256,200 @@ ticket:
   opening_message:
     fields:
       topic: Aihe
+    content: "{staff}\n{creator} has created a new ticket\n"
   references_ticket:
     fields:
       topic: Aihe
       number: Numero
+      date: Created at
+    description: 'This ticket is related to a previous ticket:'
+    title: ℹ️ Reference
   feedback: Kiitos palautteestasi.
+  close:
+    forbidden:
+      description: You don't have permission to close this ticket.
+      title: ❌ Error
+    staff_request:
+      description: "{requestedBy} wants to close this ticket.\nClick \"Accept\" to
+        close it now, or \"Reject\" if you still need help.\n"
+      archived: "\nThe messages in this channel will be archived for future reference.\n"
+      title: ❓ Can this ticket be closed?
+    user_request:
+      title: ❓ {requestedBy} wants to close this ticket
+    wait_for_staff: ✋ Please wait for staff to close this ticket.
+    closed:
+      description: This channel will be deleted in a few seconds…
+      title: ✅ Ticket closed
+    rejected: ✋ {user} rejected a request to close this ticket.
+    wait_for_user: ✋ Please wait for the user to respond.
+  closing_soon:
+    description: "This ticket will be closed due to inactivity <t:{timestamp}:R>.\n
+      Send a message to cancel this automation.\n"
+    title: ⌛ This ticket will be closed soon
+  offline:
+    description: There aren't any staff members available at the moment, so it may
+      take longer than usual to get a response.
+    title: 😴 We're not online
+  working_hours:
+    next:
+      description: We'll be back at <t:{timestamp}:F> (<t:{timestamp}:R>), although
+        you may receive a response before then.
+      title: 🕗 We're not working at the moment
+    today:
+      description: You may receive a response before, but we don't start working until
+        <t:{timestamp}:t> today (<t:{timestamp}:R>).
+      title: 🕗 We're not working at the moment
+  answers:
+    no_value: '*No response*'
+  claimed: 🙌 {user} has claimed this ticket.
+  created:
+    description: 'Your ticket channel has been created: {channel}.'
+    title: ✅ Ticket created
+  edited:
+    description: Your changes have been saved.
+    title: ✅ Ticket updated
+  inactive:
+    description: "There hasn't been any activity in this channel since <t:{timestamp}:R>.\n
+      Please continue the conversation or {close} the ticket.\n"
+    title: ⏰ This ticket is inactive
+  references_message:
+    description: References [a message]({url}) sent {timestamp} by {author}.
+    title: ℹ️ Reference
+  released: ♻️ {user} has released this ticket.
+dm:
+  closed:
+    fields:
+      feedback: Your feedback
+      reason: Closed because
+      closed:
+        name: Closed at
+        value: '{timestamp} (after {duration})'
+      closed_by: Closed by
+      created: Created at
+      response: Response time
+      ticket: Ticket
+      topic: Topic
+    archived: Use the `/transcript` command in **{guild}** to view the archived messages.
+    title: Your ticket has been closed
+  confirm_open:
+    title: Do you want to open a ticket with the following topic?
+log:
+  admin:
+    description:
+      target:
+        settings: the settings
+        category: a category
+        panel: a panel
+        question: a question
+        tag: a tag
+      joined: '{user} {verb} {targetType}'
+    changes: Changes
+    title:
+      joined: '{targetType} {verb}'
+      target:
+        category: Category
+        panel: Panel
+        question: Question
+        settings: Settings
+        tag: Tag
+    verb:
+      create: created
+      delete: deleted
+      update: updated
+  message:
+    verb:
+      update: updated
+      delete: deleted
+    description: '{user} {verb} a message'
+    message: Message
+    title: Message {verb}
+  ticket:
+    added: Added members
+    description: '{user} {verb} a ticket'
+    removed: Removed members
+    ticket: Ticket
+    title: Ticket {verb}
+    verb:
+      claim: claimed
+      close: closed
+      create: created
+      unclaim: released
+      update: updated
+menus:
+  category:
+    placeholder: Select a ticket category
+  guild:
+    placeholder: Select a server
+misc:
+  category_full:
+    description: "The category has reached its maximum capacity.\nPlease try again
+      later.\n"
+    title: ❌ Category full
+  expired:
+    description: You didn't respond in time. Please try again.
+    title: ⏰ Expired
+  member_limit:
+    description:
+    - Please use your existing ticket or close it before creating another.
+    - "Please close a ticket before creating another.\nUse `/tickets` to view your
+      existing tickets.\n"
+    title:
+    - ❌ You already have a ticket
+    - ❌ You already have %d open tickets
+  missing_roles:
+    description: You do not have the roles required to be able to create a ticket
+      in this category.
+    title: ❌ Insufficient roles
+  role_error:
+    description: Sorry, the operation failed because of an invalid configuration.
+    fields:
+      for_admins:
+        value: "An invalid user or role was supplied, which usually means a staff
+          role has been deleted. [Click here]({url}) for resolution instructions.\n"
+        name: For server administrators
+    title: ⚠️ Something went wrong
+  blocked:
+    description: You are not allowed to create tickets.
+    title: ❌ Blocked
+  cooldown:
+    description: Please wait {time} before creating another ticket in this category.
+    title: ❌ Please wait
+  error:
+    description: "Sorry, an unexpected error occurred.\nPlease give this information
+      to an administrator.\n"
+    fields:
+      identifier: Identifier
+    title: ⚠️ Something went wrong
+  expires_in: Expires in {time}
+  invalid_ticket:
+    description: Please specify a valid ticket.
+    title: ❌ Invalid ticket
+  no_categories:
+    description: "No ticket categories have been configured.\nConfigure your server
+      at {url}."
+    title: ❌ There are no ticket categories
+  not_ticket:
+    description: You can only use this command in tickets.
+    title: ❌ This isn't a ticket channel
+  ratelimited:
+    description: Try again in a few seconds.
+    title: 🐢 Please slow down
+  unknown_category:
+    description: Please try a different category.
+    title: ❌ That ticket category doesn't exist
+  update:
+    description: "> [View `{version}` on GitHub]({github})\n> [Changelog]({changelog})\n
+      > [Update guide]({guide})\n"
+    title: An update is available
+modals:
+  feedback:
+    comment:
+      label: Comment
+      placeholder: Do you have any additional feedback?
+    rating:
+      label: Rating
+      placeholder: 1-5
+    title: How did we do?
+  topic:
+    label: Topic
+    placeholder: What is this ticket about?
