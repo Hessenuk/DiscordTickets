@@ -232,6 +232,9 @@ commands:
         ticket:
           description: Transkripti alınacak talep
           name: ticket
+      not_staff:
+        title: ❌ Error
+        description: Only staff members can read the transcripts of others' tickets.
     transfer:
       description: Talebin sahipliğini başka bir üyeye aktarma
       name: transfer
@@ -376,6 +379,14 @@ misc:
       > [Changelog]({changelog})
       > [Update guide]({guide})
     title: Bir güncelleme mevcut
+  role_error:
+    fields:
+      for_admins:
+        name: For server administrators
+        value: "An invalid user or role was supplied, which usually means a staff
+          role has been deleted. [Click here]({url}) for resolution instructions.\n"
+    title: ⚠️ Something went wrong
+    description: Sorry, the operation failed because of an invalid configuration.
 modals:
   feedback:
     comment:
